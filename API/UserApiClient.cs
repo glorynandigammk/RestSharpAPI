@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharpAPI.Models;
 
-namespace RestSharpAPI
+namespace RestSharpAPI.API
 {
-    public static class ApiClient
+    public static class UserApiClient
     {
         private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://petstore.swagger.io/v2/") };
 
