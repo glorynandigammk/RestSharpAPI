@@ -12,7 +12,11 @@ namespace RestSharpAPI.API
     {
         private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://petstore.swagger.io/v2/") };
 
-        public static async Task<HttpResponseMessage> CreateUserAsync(User user) => await client.PostAsJsonAsync("user", user);
+       
+        public static async Task<HttpResponseMessage> CreateUserAsync(User user) { 
+            return await client.PostAsJsonAsync("user", user);            
+        }
+
         public static async Task<User?> GetUserAsync(string username)
         {
             var user = await HttpHelper.GetSafeJsonAsync<User>( client,"user/{username}");
