@@ -1,8 +1,9 @@
 ﻿using RestSharpAPI.Models;
+using RestSharpAPI.RestSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace RestSharpAPI
+namespace RestSharpAPI.AutomationRunner
 {
     public class RestSharpAutomationRunner
     {

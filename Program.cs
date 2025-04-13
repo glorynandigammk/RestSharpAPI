@@ -1,6 +1,6 @@
 ﻿// PET TEST
-using RestSharpAPI;
 using RestSharpAPI.API;
+using RestSharpAPI.AutomationRunner;
 using RestSharpAPI.Models;
 using RestSharpAPI.TestAssertions;
 

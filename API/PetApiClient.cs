@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharpAPI.Models;
+using RestSharpAPI.Utilities;
 
 namespace RestSharpAPI.API
 {
