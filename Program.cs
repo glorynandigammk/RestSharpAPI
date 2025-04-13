@@ -33,3 +33,5 @@ await UserApiClient.DeleteUserAsync(user.Username);
 
 
 await RestSharpAutomationRunner.RunPetAutomation();
+await RestSharpAutomationRunner.RunUserAutomation();
+await RestSharpAutomationRunner.RunOrderAutomation();

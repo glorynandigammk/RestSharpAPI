@@ -48,6 +48,80 @@ namespace RestSharpAPI
                 ? "Pet successfully deleted."
                 : "Pet still exists.");
         }
-    }
 
+        public static async Task RunUserAutomation()
+        {
+            Console.WriteLine("----- USER AUTOMATION -----");
+
+            var user = new User
+            {
+                Id = 1001,
+                Username = "johndoe",
+                FirstName = "John",
+                LastName = "Doe",
+                Email = "john.doe@example.com",
+                Password = "password123",
+                Phone = "1234567890",
+                UserStatus = 1
+            };
+
+            // 1. Create User
+            Console.WriteLine("Creating User...");
+            var createUserResponse = await RestSharpApiClient.CreateUser(user);
+            Console.WriteLine($"Create User Status: {createUserResponse.StatusCode}");
+
+            // 2. Get User
+            var getUserResponse = await RestSharpApiClient.GetUser(user.Username);
+            Console.WriteLine($"User Retrieved: {getUserResponse.Data?.Username}");
+
+            // 3. Update User
+            user.FirstName = "Johnny";
+            var updateUserResponse = await RestSharpApiClient.UpdateUser(user.Username, user);
+            Console.WriteLine($"Update User Status: {updateUserResponse.StatusCode}");
+
+            // 4. Confirm Update
+            var updatedUser = await RestSharpApiClient.GetUser(user.Username);
+            Console.WriteLine($"Updated User FirstName: {updatedUser.Data?.FirstName}");
+
+            // 5. Delete User
+            var deleteUserResponse = await RestSharpApiClient.DeleteUser(user.Username);
+            Console.WriteLine($"Delete User Status: {deleteUserResponse.StatusCode}");
+
+        }
+
+        public static async Task RunOrderAutomation()
+        {
+            Console.WriteLine("----- ORDER AUTOMATION -----");
+
+            var order = new Order
+            {
+                Id = 2002,
+                PetId = 1, // Use an existing PetId
+                Quantity = 1,
+                ShipDate = DateTime.UtcNow.ToString(),
+                Status = "placed",
+                Complete = true
+            };
+
+            // 1. Place Order
+            var placeOrderResponse = await RestSharpApiClient.PlaceOrder(order);
+            Console.WriteLine($"Place Order Status: {placeOrderResponse.StatusCode}");
+
+            // 2. Get Order
+            var getOrderResponse = await RestSharpApiClient.GetOrder(order.Id);
+            Console.WriteLine($"Order Retrieved: {getOrderResponse.Data?.Id}, Status: {getOrderResponse.Data?.Status}");
+
+            // 3. Delete Order
+            var deleteOrderResponse = await RestSharpApiClient.DeleteOrder(order.Id);
+            Console.WriteLine($"Delete Order Status: {deleteOrderResponse.StatusCode}");
+
+            // 4. Confirm Deletion
+            var confirmDeleteOrder = await RestSharpApiClient.GetOrder(order.Id);
+            Console.WriteLine(confirmDeleteOrder.StatusCode == System.Net.HttpStatusCode.NotFound
+                ? "Order successfully deleted."
+                : "Order still exists.");
+        }
+    }
 }
+
+
