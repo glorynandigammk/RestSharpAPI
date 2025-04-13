@@ -18,24 +18,18 @@ namespace RestSharpAPI.API
             return await client.PostAsJsonAsync("pet", pet);
         }
 
-        public static async Task<Pet> GetPetAsync(long petId)
+        public static async Task<Pet?> GetPetAsync(long petId)
         {
-            var response = await client.GetAsync($"pet/{petId}");
-
-            if (response.IsSuccessStatusCode)
+            var pet = await HttpHelper.GetSafeJsonAsync<Pet>(client, $"pet/{petId}");
+            if (pet != null)
             {
-                return await response.Content.ReadFromJsonAsync<Pet>();
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                Console.WriteLine($"Pet with ID {petId} not found.");
-                return null;
+                Console.WriteLine($"Pet found: {pet.Name}");
             }
             else
             {
-                Console.WriteLine($"Failed to fetch pet. Status: {response.StatusCode}");
-                return null;
+                Console.WriteLine("Pet not found or error occurred.");
             }
+            return pet;
         }
 
         public static async Task<HttpResponseMessage> UpdatePetAsync(Pet pet)

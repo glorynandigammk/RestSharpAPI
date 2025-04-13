@@ -14,24 +14,20 @@ namespace RestSharpAPI.API
 
         // Order endpoints
         public static async Task<HttpResponseMessage> PlaceOrderAsync(Order order) => await client.PostAsJsonAsync("store/order", order);
-        public static async Task<Order> GetOrderAsync(long orderId)
-        {
-            var response = await client.GetAsync($"store/order/{orderId}");
 
-            if (response.IsSuccessStatusCode)
+
+        public static async Task<Order?> GetOrderAsync(long orderId)
+        {
+            var order = await HttpHelper.GetSafeJsonAsync<Order>(client, $"store/order/{orderId}");
+            if (order != null)
             {
-                return await response.Content.ReadFromJsonAsync<Order>();
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                Console.WriteLine($"Order with ID {orderId} not found.");
-                return null;
+                Console.WriteLine($"Order found: {order.Id}");
             }
             else
             {
-                Console.WriteLine($"Failed to fetch order. Status: {response.StatusCode}");
-                return null;
+                Console.WriteLine($"Order with ID {orderId} not found.");
             }
+            return order;
         }
 
         public static async Task<HttpResponseMessage> DeleteOrderAsync(long orderId) => await client.DeleteAsync($"store/order/{orderId}");
