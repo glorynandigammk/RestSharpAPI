@@ -16,12 +16,12 @@ namespace RestSharpAPI.AutomationRunner
 
             var order = new Order
             {
-                Id = 2002,
-                PetId = 1, // Use an existing PetId
-                Quantity = 1,
-                ShipDate = DateTime.UtcNow.ToString(),
-                Status = "placed",
-                Complete = true
+                id = 2002,
+                petId = 123456, // Use an existing PetId
+                quantity = 1,
+                shipDate = DateTime.UtcNow,
+                status = "placed",
+                complete = true
             };
 
             // 1. Place Order
@@ -29,15 +29,15 @@ namespace RestSharpAPI.AutomationRunner
             Console.WriteLine($"Place Order Status: {placeOrderResponse.StatusCode}");
 
             // 2. Get Order
-            var getOrderResponse = await OrderRestSharpClient.GetOrder(order.Id);
-            Console.WriteLine($"Order Retrieved: {getOrderResponse.Data?.Id}, Status: {getOrderResponse.Data?.Status}");
+            var getOrderResponse = await OrderRestSharpClient.GetOrder(order.id);
+            Console.WriteLine($"Order Retrieved: {getOrderResponse.Data?.id}, Status: {getOrderResponse.Data?.status}");
 
             // 3. Delete Order
-            var deleteOrderResponse = await OrderRestSharpClient.DeleteOrder(order.Id);
+            var deleteOrderResponse = await OrderRestSharpClient.DeleteOrder(order.id);
             Console.WriteLine($"Delete Order Status: {deleteOrderResponse.StatusCode}");
 
             // 4. Confirm Deletion
-            var confirmDeleteOrder = await OrderRestSharpClient.GetOrder(order.Id);
+            var confirmDeleteOrder = await OrderRestSharpClient.GetOrder(order.id);
             Console.WriteLine(confirmDeleteOrder.StatusCode == System.Net.HttpStatusCode.NotFound
                 ? "Order successfully deleted."
                 : "Order still exists.");

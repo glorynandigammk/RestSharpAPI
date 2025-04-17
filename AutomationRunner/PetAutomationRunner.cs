@@ -17,12 +17,12 @@ namespace RestSharpAPI.AutomationRunner
             {
                 id = 123456,
                 name = "Fluffy",
-                status =PetStatus.available.ToString(),
+                status = PetStatus.available.ToString(),
             };
 
             Console.WriteLine("Creating Pet...");
             var createResponse = await PetRestSharpClient.CreatePet(newPet);
-            Console.WriteLine($"Create Status: {createResponse.StatusCode}");         
+            Console.WriteLine($"Create Status: {createResponse.StatusCode}");
 
 
             // 2. Get the Pet
@@ -49,7 +49,7 @@ namespace RestSharpAPI.AutomationRunner
             Console.WriteLine("Deleting Pet...");
             var deleteResponse = await PetRestSharpClient.DeletePet(newPet.id);
             Console.WriteLine($"Delete Status: {deleteResponse.StatusCode}");
-         
+
 
             // 6. Upload Image
             Console.WriteLine("Upload Image...");
@@ -63,16 +63,19 @@ namespace RestSharpAPI.AutomationRunner
             Console.WriteLine(filterPetByStatus.StatusCode == System.Net.HttpStatusCode.OK
                    ? "Successfully uploaded Pet Image." : "Image not found.");
 
+
+        }
+
+        public static async Task DelatePet(Pet pet)
+        {
             // 8. Confirm deletion
             Console.WriteLine("Verifying Deletion...");
-            var getAfterDelete = await PetRestSharpClient.GetPet(newPet.id);
+            var getAfterDelete = await PetRestSharpClient.GetPet(pet.id);
             Console.WriteLine(getAfterDelete.StatusCode == System.Net.HttpStatusCode.NotFound
                 ? "Pet successfully deleted."
                 : "Pet still exists.");
         }
 
-       
-        
     }
 }
 

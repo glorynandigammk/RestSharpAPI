@@ -28,11 +28,11 @@ namespace RestSharpAPI.TestAssertions
         public static void AssertOrderEqual(Order expected, Order actual)
         {
             Console.WriteLine("🔍 Verifying Order...");
-            AssertEqual(expected.Id, actual.Id, "Id");
-            AssertEqual(expected.PetId, actual.PetId, "PetId");
-            AssertEqual(expected.Quantity, actual.Quantity, "Quantity");
-            AssertEqual(expected.Status, actual.Status, "Status");
-            AssertEqual(expected.Complete, actual.Complete, "Complete");
+            AssertEqual(expected.id, actual.id, "Id");
+            AssertEqual(expected.petId, actual.petId, "PetId");
+            AssertEqual(expected.quantity, actual.quantity, "Quantity");
+            AssertEqual(expected.status, actual.status, "Status");
+            AssertEqual(expected.complete, actual.complete, "Complete");
         }
 
         public static void AssertUserEqual(User expected, User actual)
