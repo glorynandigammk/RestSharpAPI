@@ -17,9 +17,6 @@ namespace RestSharpAPI.Models
     public class Pet
     {
         public long id { get; set; }
-
-        [MinLength(1)]
-        [MaxLength(100)]
         public string name { get; set; }
         public string status { get; set; }
     }
