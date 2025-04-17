@@ -12,42 +12,54 @@ namespace RestSharpAPI.AutomationRunner
             // 1. Create a new Pet
             var newPet = new Pet
             {
-                Id = 123456,
-                Name = "Fluffy",
-                Status = "available"
+                id = 123456,
+                name = "Fluffy",
+                status =PetStatus.available.ToString(),
             };
 
             Console.WriteLine("Creating Pet...");
-            var createResponse = await RestSharpApiClient.CreatePet(newPet);
+            var createResponse = await PetRestSharpClient.CreatePet(newPet);
             Console.WriteLine($"Create Status: {createResponse.StatusCode}");
 
             // 2. Get the Pet
             Console.WriteLine("Getting Pet...");
-            var getResponse = await RestSharpApiClient.GetPet(newPet.Id);
-            Console.WriteLine($"Pet Retrieved: {getResponse.Data?.Name}");
+            var getResponse = await PetRestSharpClient.GetPet(newPet.id);
+            Console.WriteLine($"Pet Retrieved: {getResponse.Data?.name}");
 
             // 3. Update the Pet
-            newPet.Name = "FluffyUpdated";
-            newPet.Status = "sold";
+            newPet.name = "FluffyUpdated";
+            newPet.status = PetStatus.sold.ToString();
             Console.WriteLine("Updating Pet...");
-            var updateResponse = await RestSharpApiClient.UpdatePet(newPet);
+            var updateResponse = await PetRestSharpClient.UpdatePet(newPet);
             Console.WriteLine($"Update Status: {updateResponse.StatusCode}");
 
             // 4. Get again to confirm update
-            var getUpdatedResponse = await RestSharpApiClient.GetPet(newPet.Id);
-            Console.WriteLine($"Updated Pet: {getUpdatedResponse.Data?.Name}, Status: {getUpdatedResponse.Data?.Status}");
+            var getUpdatedResponse = await PetRestSharpClient.GetPet(newPet.id);
+            Console.WriteLine($"Updated Pet: {getUpdatedResponse.Data?.name}, Status: {getUpdatedResponse.Data?.status}");
 
             // 5. Delete the Pet
             Console.WriteLine("Deleting Pet...");
-            var deleteResponse = await RestSharpApiClient.DeletePet(newPet.Id);
+            var deleteResponse = await PetRestSharpClient.DeletePet(newPet.id);
             Console.WriteLine($"Delete Status: {deleteResponse.StatusCode}");
 
             // 6. Confirm deletion
             Console.WriteLine("Verifying Deletion...");
-            var getAfterDelete = await RestSharpApiClient.GetPet(newPet.Id);
+            var getAfterDelete = await PetRestSharpClient.GetPet(newPet.id);
             Console.WriteLine(getAfterDelete.StatusCode == System.Net.HttpStatusCode.NotFound
                 ? "Pet successfully deleted."
                 : "Pet still exists.");
+
+            // 7. Upload Image
+            Console.WriteLine("Upload Image...");
+            var resposeAfterImageUpload = await PetRestSharpClient.UploadImage(newPet.id);
+            Console.WriteLine(resposeAfterImageUpload.StatusCode == System.Net.HttpStatusCode.OK
+                   ? "Successfully uploaded Pet Image." : "Image not found.");
+
+            //8. Find pets by Status: Available values : available, pending, sold
+            Console.WriteLine("Find pets by status: available");
+            var filterPetByStatus = await PetRestSharpClient.FindPetsByStatus(PetStatus.available);
+            Console.WriteLine(filterPetByStatus.StatusCode == System.Net.HttpStatusCode.OK
+                   ? "Successfully uploaded Pet Image." : "Image not found.");
         }
 
         public static async Task RunUserAutomation()

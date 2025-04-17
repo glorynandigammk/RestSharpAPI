@@ -10,7 +10,7 @@ namespace RestSharpAPI.RestSharp
 {
     public class RestSharpApiClient
     {
-        private static readonly RestClient client = new RestClient("https://petstore.swagger.io/v2/");
+        private static readonly RestClient client = new RestClient("https://petstore.swagger.io/");
 
         // Pet endpoints
         public static async Task<RestResponse> CreatePet(Pet pet) => await client.ExecuteAsync(new RestRequest("pet", Method.Post).AddJsonBody(pet));

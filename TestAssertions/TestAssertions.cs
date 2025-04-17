@@ -20,9 +20,9 @@ namespace RestSharpAPI.TestAssertions
         public static void AssertPetEqual(Pet expected, Pet actual)
         {
             Console.WriteLine("🔍 Verifying Pet...");
-            AssertEqual(expected.Id, actual.Id, "Id");
-            AssertEqual(expected.Name, actual.Name, "Name");
-            AssertEqual(expected.Status, actual.Status, "Status");
+            AssertEqual(expected.id, actual.id, "Id");
+            AssertEqual(expected.name, actual.name, "Name");
+            AssertEqual(expected.status, actual.status, "Status");
         }
 
         public static void AssertOrderEqual(Order expected, Order actual)

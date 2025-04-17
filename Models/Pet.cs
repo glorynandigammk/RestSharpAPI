@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace RestSharpAPI.Models
 {
+    public enum PetStatus
+    {
+        available,
+        pending,
+        sold
+    }
+
     public class Pet
     {
-        public long Id { get; set; }
+        public long id { get; set; }
 
         [MinLength(1)]
         [MaxLength(100)]
-        public string Name { get; set; }
-        public string Status { get; set; }
+        public string name { get; set; }
+        public string status { get; set; }
     }
 }
